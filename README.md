@@ -1,10 +1,7 @@
-# Tasmanian devil (Sarcophilus harrissii) transcriptomics
+Tasmanian devil (Sarcophilus harrissii) transcriptomics
 
-#On here is where I will put my notes, pipeline and scripts for the uninfected Tasmanian devil transcriptomics project
+On here is where I will put my notes, pipeline and scripts for analyzing my 21 uninfected Tasmanian devil transcriptomes produced from ear tissue samples. 
 
-#Let's start with the location of all my files on Kamiak (WSU's super computer)
-
-####Here is where all my fastQ fils are
-
+Let's start with the location of all my fastQ files on Kamiak (WSU's super computer)
 /data/kelley/projects/Devil/Analyses
 
