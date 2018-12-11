@@ -5,5 +5,6 @@
 #Let's start with the location of all my files on Kamiak (WSU's super computer)
 
 ####Here is where all my fastQ fils are
-  /data/kelley/projects/Devil/Analyses
+
+/data/kelley/projects/Devil/Analyses
 
