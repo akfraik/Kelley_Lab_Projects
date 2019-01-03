@@ -1,0 +1,68 @@
+###########################################################################################################################
+# 1. Quality check, trimming and mapping to the reference genome
+# 1a. Mapping 
+###########################################################################################################################
+
+
+# First were ran FASTQC on the fastQ files from the current working directory and put into a new directory for fastQC
+# output: $FASTQCDIR
+fastqc --outdir $FASTQCDIR --noextract --nogroup *.fastq.gz
+
+
+###########################################################################################################################
+# 1b. Trimming
+###########################################################################################################################
+
+
+trim_galore --output_dir $TRIMDIR --quality 20 --fastqc --fastqc_args "--nogroup --noextract 
+--outdir $FASTQCDIR" --path_to_cutadapt cutadapt --illumina --stringency 6 --paired --gzip *.fastq.gz
+
+
+###########################################################################################################################
+# 1c. Map to reference genome
+###########################################################################################################################
+
+### First change directories to the directory with your reference genome and annotation files
+cd $REFDIR
+
+### Second index reference genome using HiSat2
+# We had to build a merged reference genome with the introns and exons from the published reference genome and 
+# the separately published mitochondrial genome, starting with the reference genome splice sites ($Splice_REFERENCE)
+hisat2_extract_splice_sites.py $REFERENCE_ANN > $Splice_REFERENCE
+
+# then the exons ($Exon_REFERENCE)
+hisat2_extract_exons.py $REFERENCE_ANN > $Exon_REFERENCE
+
+### Then build mitochondrial splice ($Splice_MT) sites from the mitochondrial reference ($Mt_ANN)
+hisat2_extract_splice_sites.py $Mt_ANN > $Splice_Mt
+
+# then the exon ($Exon_Mt) files
+hisat2_extract_exons.py $Mt_ANN > $Exon_Mt
+
+# Use "cat" or concatenate to combine the output into one merged splice file and one exon file from the mitochondrial and reference genome
+cat $Splice_REFERENCE $Splice_Mt > $Merged_Splice
+cat $Exon_REFERENCE $Exon_MT > $Merged_Exon
+
+### Third build index for genome based on merged exon and intron/splice files 
+hisat2-build --ss $Merged_Splice --exon $Merged_Exon -f $Merged_REFERENCE Devil_Index_Mt_HISat2
+
+### Finally we aligned our trimmed fastq files to our indexed reference genome for our 20 samples using a for loop
+# replace 1 .. 20 with sample IDs
+for i in 1 .. 20;
+
+do 
+
+# unzip all the trimmed fastq files 
+gunzip $TRIMDIR/${i}*.fq.gz
+
+# Output directory is the directory for the mapped files $MAPDIR
+# We directed the output 
+hisat2 -p 4 -k 10 --dta -x $REF_IN -1 $TRIMDIR/${i}.fq -2 $TRIMDIR/${i}.fq -S $MAPDIR/${i}.sam --rna-strandness FR --fr
+
+#Echo or print the name of the file that completes alignment
+echo ${i}_fastq
+
+# Zip all the trimmed fastq files after they finish running 
+gzip $TRIMDIR/${i}*.fq.gz
+
+done
