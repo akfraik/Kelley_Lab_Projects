@@ -4,9 +4,9 @@
 ###########################################################################################################################
 
 ## Navigate into the directory your gene count matrix is in
-cd $COUNTDIR
-module load r
-R
+#cd $COUNTDIR
+#module load r
+#R
 
 ## Or download your gene count matrix file onto your local computer and read it in as a csv file 
 # adjust the working directory in the read.csv line to include the path to your locally downloaded file
