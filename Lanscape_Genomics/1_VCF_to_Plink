@@ -47,3 +47,4 @@ else
     cd "${INDIR}/working"
     qsub $sfile
     echo "${INDIR}/working"
+    
