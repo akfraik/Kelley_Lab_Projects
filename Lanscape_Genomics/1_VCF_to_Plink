@@ -1,0 +1,49 @@
+###########################################################################################################################
+# 1. Convert VCF to PED file
+# 1a. Convert the Beagle imputed VCF output file a to Plink file
+###########################################################################################################################
+
+## First step, create one master VCF file
+
+# Minimum genotype probability to allow (otherwise set genotype to missing)
+  MIN_GP=1
+
+# Directories where files are stored
+INDIR="/PATH_TO_INPUT_FILES"
+OUTDIR="/Plink_Files"
+# Replace numbers with your population names
+POPULATIONS="1 2 3 4 5 6 7"
+Keep_File="$OUTDIR/focal_individuals.keep"
+
+# A little trick in SLURM so that you create output and input
+# Load plink
+  if [[ $PBS_O_WORKDIR ]]; then=
+  
+  source /usr/share/modules/init/bash
+  module load bcftools/2016-04-08
+  module load plink/1.90b3
+    
+  set -u
+  set -e
+  set -o pipefail
+   
+## bcftools to merge population files into one VCF
+bcftools merge --output-type "z" --output "${OUTDIR}/all.gp.vcf.gz" \
+        "${INDIR}/1.gp.vcf.gz" "${INDIR}/2.gp.vcf.gz" "${INDIR}/3.gp.vcf.gz" "${INDIR}/4.gp.vcf.gz" \
+        "${INDIR}/5.gp.vcf.gz" "${INDIR}/6.gp.vcf.gz" "${INDIR}/7.gp.vcf.gz" \
+    || { echo "merging failed"; exit 1; }
+    
+## Then convert the master, merged VCF into a PED files
+# Filtering and quality control steps provided in subsequent scripts for filtering out variants
+   plink --vcf "${OUTDIR}/all.gp.vcf.gz" --vcf-min-gp $MIN_GP --allow-extra-chr \
+        --const-fid 1 --recode --out "${OUTDIR}/ped_all" --keep $Keep_File \
+    || { echo "creating plink file failed"; exit 1; }
+
+else
+
+# SLURM equivalent to qsub to create copies of the scripts and create output and error files
+    sfile="${INDIR}/script_copies/$(date '+%Y-%m-%d')-$(basename $0)"
+    cp $0 $sfile
+    cd "${INDIR}/working"
+    qsub $sfile
+    echo "${INDIR}/working"
