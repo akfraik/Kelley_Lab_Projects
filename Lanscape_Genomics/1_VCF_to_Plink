@@ -39,6 +39,33 @@ bcftools merge --output-type "z" --output "${OUTDIR}/all.gp.vcf.gz" \
         --const-fid 1 --recode --out "${OUTDIR}/ped_all" --keep $Keep_File \
     || { echo "creating plink file failed"; exit 1; }
 
+## Now create filtered plink files for pre-disease and post-diseased populations
+# SNP filtering parameters
+MAXMISSINGIND=0.8   # Maximum missing data rate per ind.; applied before the other filters
+MINMAF=0.05         # Minimum minor allele frequency across all individuals
+MAXMISSINGSNP=0.6   # Maximum missing data rate per SNP across all individuals
+
+## Looking for lines that don't have the pattern and we want to remove all SNPs just on the X chromosome
+    grep -v "chrX" $mapfile | cut -f 2 > "${INDIR}/noX.txt" \
+        || { echo "Combining SNPs filter files failed"; exit 1; }
+
+#Creating "pre-disease" and "post-disease" files
+     plink --allow-extra-chr --file "${OUTDIR}/ped_all" --extract "${INDIR}/noX.txt" --mind $MAXMISSINGIND \
+     --maf $MINMAF --geno $MAXMISSINGSNP --recode --out "${OUTDIR}/ped_tmp" --keep $keep_file \
+        || { echo "plink failed"; exit 1; }
+
+ ## The --keep and --extract parameters in this command are optional for generating a pre-disease PED file for analyses
+ # --keep can be used for pulling out specific indivduals (in this case, the pre-disease individuals)
+ # --extract can be used for pulling out specific SNPs
+      plink --allow-extra-chr --file "${OUTDIR}/ped_tmp" --recode \
+      --out "${OUTDIR}/ped_pre_disease" --keep "${OUTDIR}/focal_pre_disease.keep" \
+        || { echo "final pre-disease plink failed"; exit 1; }
+
+ ## Post-disease PED file for analyses
+      plink --allow-extra-chr --file "${OUTDIR}/ped_tmp" --recode \
+      --out "${OUTDIR}/ped_post_disease" --keep "${OUTDIR}/focal_post_disease.keep" \
+        || { echo "final pre-disease plink failed"; exit 1; }
+
 else
 
 # SLURM equivalent to qsub to create copies of the scripts and create output and error files
@@ -47,4 +74,4 @@ else
     cd "${INDIR}/working"
     qsub $sfile
     echo "${INDIR}/working"
-    
+  
