@@ -24,7 +24,7 @@ Keep_File_Post="$OUTDIR/focal_post_disease.keep"
   for i in 1 2 3 4 5 6 7;
   do
 ## VCF tools to create pre-disease heterozygosity calculations for each population
-   vcftools --gzvcf "${PROJDIR}/data/Rapture/all.gp.vcf.gz" --keep ${OUTDIR}/"${i}.keep.before" --recode 
+   vcftools --gzvcf "${PROJDIR}/data/Rapture/all.gp.vcf.gz" --keep "${OUTDIR}/${i}.keep.before" --recode 
      --recode-INFO-all --out "${OUTDIR}/${i}_pre" \
    vcftools --vcf "${OUTDIR}/${i}_pre.recode.vcf" --het --out "${OUTDIR}/heterozygosity/${i}_pre_het"
   done
