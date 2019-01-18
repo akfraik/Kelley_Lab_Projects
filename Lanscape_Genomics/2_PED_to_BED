@@ -30,41 +30,43 @@ MAXMISSINGSNP=0.1   # Maximum missing data rate per SNP across all individuals
    
  ## Creating pre-disease PED files with more stringent filtering for structural analyses
    plink --allow-extra-chr --file "$INDIR/ped_all.ped" --mind $MAXMISSINGIND --maf $MINMAF --geno $MAXMISSINGSNP \
-        --recode --out "${OUTDIR}/ped_pre_dftd_admix_tmp" --keep $keep_file \
+        --recode --out "${OUTDIR}/ped_pre_dftd_fast_struc_tmp" --keep $keep_file \
         || { echo "ptmp pre-disease plink failed"; exit 1; }
 
-        plink --allow-extra-chr --file "${OUTDIR}/beagle_rap_pre_tmp" \
-        --recode --out "${OUTDIR}/ped_pre_dftd_admix" --keep $keep_file \
+        plink --allow-extra-chr --file "${OUTDIR}/ped_pre_dftd_fast_struc_tmp" \
+        --recode --out "${OUTDIR}/ped_pre_dftd_fast_struc" --keep $keep_file \
         || { echo "final plink failed"; exit 1; }
 
  ## Creating post-disease PED files with more stringent filtering for structural analyses
    plink --allow-extra-chr --file "$INDIR/ped_all.ped" --mind $MAXMISSINGIND --maf $MINMAF --geno $MAXMISSINGSNP \
-        --recode --out "${OUTDIR}/ped_post_dftd_admix_tmp" --keep $keep_file \
+        --recode --out "${OUTDIR}/ped_post_dftd_fast_struc_tmp" --keep $keep_file \
         || { echo "tmp post-disease plink failed"; exit 1; }
 
-        plink --allow-extra-chr --file "${OUTDIR}/beagle_rap_pre_tmp" \
-        --recode --out "${OUTDIR}/ped_post_dftd_admix" --keep $keep_file \
+        plink --allow-extra-chr --file "${OUTDIR}/ped_post_dftd_fast_struc_tmp" \
+        --recode --out "${OUTDIR}/ped_post_dftd_fast_struc" --keep $keep_file \
         || { echo "final plink failed"; exit 1; }
   
 ## Creating BED files for pre-disease
  # Use all the above to create regular bed file pre-disease
-  plink --noweb --file "${OUTDIR}/ped_pre_dftd_admix" --make-bed --allow-extra-chr --out "${OUTDIR}/bed_pre_dftd_admix"
+  plink --noweb --file "${OUTDIR}/ped_pre_dftd_fast_struc" --make-bed --allow-extra-chr --out "${OUTDIR}/bed_pre_dftd_fast_struc"
 
 ## For loop to create additional requried files
    for ext in ".bed" ".fam" ".nosex" ".bim"; do
-    cp "${OUTDIR}/bed_pre_dftd_admix$ext" "${OUTDIR}/bed_pre_dftd_admix_ChrNum$ext"
+    cp "${OUTDIR}/bed_pre_dftd_fast_struc$ext" "${OUTDIR}/bed_pre_dftd_fast_struc_ChrNum$ext"
    done
-   sed 's/.\+_GL//g' "${OUTDIR}/rap_bed_pre_admix.bim" | sed 's/_random\t/\t/g' > "${OUTDIR}/rap_bed_pre_admix_ChrNum.bim"
+   
+   sed 's/.\+_GL//g' "${OUTDIR}/bed_pre_dftd_fast_struc.bim" | sed 's/_random\t/\t/g' > "${OUTDIR}/bed_pre_dftd_fast_struc_ChrNum.bim"
 
 ## Creating BED files for post-disease
  # Use all the above to create regular bed file post-disease
-  plink --noweb --file "${OUTDIR}/ped_post_dftd_admix" --make-bed --allow-extra-chr --out "${OUTDIR}/bed_post_dftd_admix"
+  plink --noweb --file "${OUTDIR}/ped_post_dftd_fast_struc" --make-bed --allow-extra-chr --out "${OUTDIR}/bed_post_dftd_fast_struc"
 
 ## For loop to create additional requried files
    for ext in ".bed" ".fam" ".nosex" ".bim"; do
-    cp "${OUTDIR}/bed_post_dftd_admix$ext" "${OUTDIR}/bed_post_dftd_admix_ChrNum$ext"
+    cp "${OUTDIR}/bed_post_dftd_fast_struc$ext" "${OUTDIR}/bed_post_dftd_fast_struc_ChrNum$ext"
    done
-   sed 's/.\+_GL//g' "${OUTDIR}/rap_bed_post_admix.bim" | sed 's/_random\t/\t/g' > "${OUTDIR}/rap_bed_post_admix_ChrNum.bim"
+   
+   sed 's/.\+_GL//g' "${OUTDIR}/bed_post_dftd_fast_struc.bim" | sed 's/_random\t/\t/g' > "${OUTDIR}/bed_post_dftd_fast_struc_ChrNum.bim"
 
   rm "${OUTDIR}/*tmp"  
   
