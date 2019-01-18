@@ -1,0 +1,35 @@
+###########################################################################################################################
+## 4. Popualtion Genetics Statistics
+  # Ran two programs quantifying underying demographic structure 
+###########################################################################################################################
+
+## First step is to filter the VCF files the same we filtered the PED files to create the BED files
+ #To remove SNPs that are potentially linked
+
+#Filtering options that decided "SNP" list (same as in plink files)
+# Directories where files are stored
+INDIR="/PATH_TO_INPUT_FILES"
+OUTDIR="/Population_Genetics"
+POPULATIONS="1 2 3 4 5 6 7"   # Replace numbers with your population names
+Keep_File_Pre="$OUTDIR/focal_pre_disease.keep"
+Keep_File_Post="$OUTDIR/focal_post_disease.keep"
+
+## Load vcf tools and plink
+  module load vcftools
+  source /usr/share/modules/init/bash
+  module load plink/1.90_extrachr
+
+## Take converted file for VCF and use to calculate heterozygosity across all popualtions pre-dftd
+  vcftools --gzvcf "${INDIR}/all.gp.vcf.gz" --keep $Keep_File_Pre --recode --recode-INFO-all --out "${OUTDIR}/rap_pre_vcf"
+  vcftools --vcf "${OUTDIR}/rap_pre_vcf.recode.vcf" --het --out "${OUTDIR}/pre_het"
+   
+## Pre-disease heterozygosity calculation
+for i in 1 2 3 4 5 6 7;
+do
+
+## VCF tools to create pre-rapture for Fentonbury after
+  vcftools --gzvcf "${PROJDIR}/data/Rapture/all.gp.vcf.gz" --keep ${OUTDIR}/"${i}.keep.before" --recode 
+    --recode-INFO-all --out "${OUTDIR}/${i}" \
+  vcftools --vcf "${OUTDIR}/${i}.recode.vcf" --het --out "${OUTDIR}/${i}_pre_het"
+
+done
