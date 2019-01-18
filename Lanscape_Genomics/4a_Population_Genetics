@@ -5,7 +5,7 @@
 ############################# First portion of this script calculates heterozygosity #####################################
 ## Filtering options that decided "SNP" list (same as in plink files)
  # Directories where files are stored
-INDIR="/PATH_TO_INPUT_FILES"
+INDIR="/Plink_Input"
 OUTDIR="/Population_Genetics"
 POPULATIONS="1 2 3 4 5 6 7"   # Replace numbers with your population names
 Keep_File_Pre="$OUTDIR/focal_pre_disease.keep"
