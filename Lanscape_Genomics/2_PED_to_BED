@@ -1,6 +1,6 @@
 ###########################################################################################################################
-# 2. Characterize genetic population structure
-# 
+# 2. Converting PED to BED files
+# Input required for Fast Structure and Admixture 
 ###########################################################################################################################
 
 ## First step, is to convert our PED files to BED files removing SNPs that are putatively in strong LD
