@@ -85,11 +85,11 @@ else
  ## Now, we want to run the R script (in the directory) in this loop and 
   mkdir Ouftlank_Output
   mkdir Ouftlank_Output/${i}
-  sed -e 's/Variable/${i}/g' "$SCRIPTDIR/5b_Outflank.R" > "$SCRIPTDIR/5b_Outflank_${i}.R"
+  sed -e 's/Variable/${i}/g' "$SCRIPTDIR/6b_Outflank.R" > "$SCRIPTDIR/6b_Outflank_${i}.R"
 
  ## now give permission to run this script within this for loop
-  chmod u+x "$SCRIPTDIR/5b_Outflank_${i}.R"
-  "./$SCRIPTDIR/5b_Outflank_${i}.R"
+  chmod u+x "$SCRIPTDIR/6b_Outflank_${i}.R"
+  "./$SCRIPTDIR/6b_Outflank_${i}.R"
 
 done
 
