@@ -32,7 +32,7 @@ outliers<-which(qval<alpha)
 write.table(outliers,file="/PCAdapt/K2_Pre.csv",quote=FALSE)
 write.csv(qval,file="/PCAdapt/K2_Pre_All.csv",quote=FALSE)
 
-#######################################################################################################
+###########################################################################################################################
 ## Read in input files for choosing K for the post-DFTD populations
 post<-read.pcadapt("/Plink_Input/ped_post_disease.ped,type="ped")
 data<-pcadapt(post,K=20)
