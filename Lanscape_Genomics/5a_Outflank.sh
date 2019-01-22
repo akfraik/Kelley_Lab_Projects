@@ -7,6 +7,7 @@
 INDIR="/Plink_Files"
 OUTDIR="/Outflank"
 POPULATIONS="1 2 3 4 5 6 7"     # Replace numbers with your population names
+SCRIPTDIR="/Scripts"            # Specify the directory you have been storing all of your scripts (including this one) in
 
 for i in pre post;
 
@@ -82,6 +83,15 @@ if [[ $PBS_O_WORKDIR ]]; then
     
 else
 
+ ## Now, we want to run the R script (in the directory) in this loop and 
+  mkdir Ouftlank_Output
+  mkdir Ouftlank_Output/${i}
+  sed -e 's/Variable/${i}/g' "$SCRIPTDIR/5b_Outflank.R" > "$SCRIPTDIR/5b_Outflank_${i}.R"
+
+ ## now give permission to run this script within this for loop
+  chmod u+x "$SCRIPTDIR/5b_Outflank_${i}.R"
+  "./$SCRIPTDIR/5b_Outflank_${i}.R"
+
 done
 
 ## SLURM equivalent to qsub to create copies of the scripts and create output and error files
@@ -95,4 +105,3 @@ done
     cd "${INDIR}/working"
     qsub $sfile
     echo "${INDIR}/working"
- 
