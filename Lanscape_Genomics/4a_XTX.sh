@@ -12,8 +12,6 @@ POPULATIONS="1 2 3 4 5 6 7"     # Replace numbers with your population names
 SCRIPTDIR="/Scripts"            # Specify the directory you have been storing all of your scripts (including this one) in
 KEEPDIR="/Plink_Input"
 
-outer=1
-
 ## For loop with pre and post-disease status animals
   for i in pre post;
   do
@@ -21,11 +19,6 @@ outer=1
 ## Make directories for pre and post-disease status animals
   mkdir XTX/${i}
   POPFILE="/Structure_Analyses/Devils_Locations_${i}.tsv"
-
-## Now pass the command for the beginning of the outer loop
-  echo "Pass $outer in outer loop."
-  echo "---------------------"
-  inner=1           # Reset inner loop counter.
 
 ## Python code for transposing a column
 transpose="""
