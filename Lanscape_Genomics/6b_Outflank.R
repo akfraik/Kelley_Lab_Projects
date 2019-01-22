@@ -2,10 +2,7 @@
 ## 5b. Outflank R Script
 ###########################################################################################################################
 
-## First step, is to take our converted BED files (pre and post-disease) which we have coded in the bash for loop as "Variable"
-## Take the output from the sript you wrote to produce the outflank input files 
- # Then set the working directory and load the required package
-setwd("/Outflank_Input")
+## First step, is to load the required package
 library(OutFLANK)
 
 ## Read in the required snpmat, popnames and locus name files to make a datamatrix containing all of the data
