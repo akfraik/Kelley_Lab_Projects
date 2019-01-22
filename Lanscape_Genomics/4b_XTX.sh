@@ -13,6 +13,10 @@ KEEPDIR="/Plink_Input"
   for i in pre post;
   do
 
+## Now set the output directory
+  OUTDIR="/XTX/${i}"
+  cd $OUTDIR
+
 ## Load plink
   source /usr/share/modules/init/bash
   module load plink/1.90_extrachr  
@@ -31,15 +35,15 @@ KEEPDIR="/Plink_Input"
  
     ## Create temporary files in which the first two lines (frequency of allele 1 and 2 for snp -n respectively)
       # Then delete the temporary files
-      head -n $s "${INDIR}/SNPs_file_${i}" | tail -n 2 > "${INDIR}/tmp_${i}.snp"
+      head -n $s "${INDIR}/SNPs_file_${i}" | tail -n 2 > "${OUTDIR}/tmp_${i}.snp"
 
      ## Then run the actual Bayenv2 command including the "X" flag to calculate the XTX value for each SNP across pops
       # DUM_ENVIRON = "dummy" environmental file that contains dummy variables for each population (p = 6 in my case)
-      bayenv2 -i "${INDIR}/tmp_${i}.snp" -m "${INDIR}/Cov_Matrix_${i}.txt" -e "${INDIR}/DUM_ENVIRON" -p 6 -k 100000 -n 2 -t -c -X -f \
+      bayenv2 -i "${OUTDIR}/tmp_${i}.snp" -m "${INDIR}/Cov_Matrix_${i}.txt" -e "${INDIR}/DUM_ENVIRON" -p 6 -k 100000 -n 2 -t -c -X -f \
        || { echo "failed on snp ${s}"; exit 1; }
     done
     
-rm "${INDIR}/tmp_${i}.snp"
+rm "${OUTDIR}/tmp_${i}.snp"
 
 ## This done is indicative of the pre and post-DFTD status for loop
 done
