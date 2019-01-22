@@ -90,5 +90,6 @@ do
 ## Compare population 6 to 7 for pre-disease, then post-disease
   vcftools --gzvcf "${INDIR}/pre_vcf.recode.vcf.gz" --weir-fst-pop "$KEEPDIR/6.before" \
     --weir-fst-pop "$KEEPDIR/7.before" --out "$OUTDIR/6_7_pre_FST"
-   vcftools --gzvcf "${INDIR}/post_vcf.recode.vcf.gz" --weir-fst-pop "$KEEPDIR/6.after" \
+  
+  vcftools --gzvcf "${INDIR}/post_vcf.recode.vcf.gz" --weir-fst-pop "$KEEPDIR/6.after" \
     --weir-fst-pop "$KEEPDIR/7.after" --out "$OUTDIR/6_7_post_FST"
