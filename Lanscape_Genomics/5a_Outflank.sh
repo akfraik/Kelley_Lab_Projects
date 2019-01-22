@@ -93,12 +93,11 @@ else
 
 done
 
-## SLURM equivalent to qsub to create copies of the scripts and create output and error files
- # Makes a copy of the script every time it runs. The only requirement is that you don't try to
- # run this script with source; relies on the fact that the name of this script will be contained in $0 variable, 
- # so it can just copy itself to a new directory. The "basename" command gets rid
- # of the directory name part of a file. The nice thing about this is that
- # it leaves an unambiguous record of what you did every time the script runs.
+# SLURM equivalent to qsub to create copies of the scripts and create output and error files
+# Makes a copy of the script every time it runs. The only requirement is that you don't try to
+# run this script with source; relies on the fact that the name of this script will be contained in $0 variable, 
+# so it can just copy itself to a new directory. The "basename" command gets rid of the directory name part of a file. 
+# The nice thing about this is that it leaves an unambiguous record of what you did every time the script runs.
     sfile="${INDIR}/script_copies/$(date '+%Y-%m-%d')-$(basename $0)"
     cp $0 $sfile
     cd "${INDIR}/working"
