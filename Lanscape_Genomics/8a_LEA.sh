@@ -14,6 +14,7 @@ do
 ## Create directories for your output files
  # Now, we want to run the R script (in the directory) in this loop and 
 mkdir LEA
+mkdir Minotaur
 mkdir LEA/${i}
 sed -e 's/Variable/${i}/g' "$SCRIPTDIR/8b_LEA_${i}.R" > "$SCRIPTDIR/8b_LEA_${i}.R"
 
