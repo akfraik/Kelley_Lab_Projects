@@ -32,6 +32,15 @@ if [[ $PBS_O_WORKDIR ]]; then
  # bedtools window [OPTIONS] [-a|-abam] -b <BED/GFF/VCF>
   bedtools window -a "${OUTDIR}/outliers_${i}.bed" -b "${OUTDIR}/biomart_reduced.bed" > "${OUTDIR}/Annotated_Outliers_Bed_${i}"
 
+## SNP2GO
+   mkdir SNP2GO
+   mkdir SNP2GO/${i}
+   sed -e 's/Variable/${i}/g' "$SCRIPTDIR/11b_SNP2GO_${i}.R" > "$SCRIPTDIR/11b_SNP2GO_${i}.R"
+
+## now give permission to run this script within this for loop
+   chmod u+x "$SCRIPTDIR/11b_SNP2GO_${i}.R" 
+  "./$SCRIPTDIR/11b_SNP2GO_${i}.R"
+
 done
 
 else
