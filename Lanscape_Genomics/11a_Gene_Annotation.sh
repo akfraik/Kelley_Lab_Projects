@@ -34,9 +34,14 @@ if [[ $PBS_O_WORKDIR ]]; then
  # bedtools window [OPTIONS] [-a|-abam] -b <BED/GFF/VCF>
   bedtools window -a "${OUTDIR}/outliers_${i}.bed" -b "${OUTDIR}/biomart_reduced.bed" > "${OUTDIR}/Annotated_Outliers_Bed_${i}"
 
-## VCF tools to create pre-DFTD VCF files for SNP2GO from bedtools overlap tool
+## VCF tools to create VCF files for SNP2GO from bedtools overlap tool
    vcftools --vcf "${INDIR}/ped_all" --keep "${INDIR}/focal_${i}_individuals.keep" --recode --recode-INFO-all 
     --snps "${OUTDIR}/Annotated_Outliers_Bed_${i}" --out "${OUTDIR}/Annotated_Outliers_Bed_${i}.vcf"
+    
+## VCF tools to create  VCF files for SNP2GO that drop all SNPs not in our set
+## ADD LINE IN SCRIPT TO CREATE SNP FILE SANS OUTLIERS
+   vcftools --vcf "${INDIR}/ped_all" --keep "${INDIR}/focal_${i}_individuals.keep" --recode --recode-INFO-all 
+    --snps "${OUTDIR}/Sans_Outliers_Bed_${i}" --out "${OUTDIR}/Sans_Outliers_Bed_${i}.vcf"
 
 ## Make scripts for SNP2GO
    mkdir SNP2GO
