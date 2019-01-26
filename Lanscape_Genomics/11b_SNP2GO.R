@@ -1,5 +1,5 @@
 ###########################################################################################################################
-## 11c. SNP2GO (R Script)
+## 11b. SNP2GO (R Script)
 ###########################################################################################################################
 
 ## First step set the working directory and load the required package
@@ -54,4 +54,4 @@
  # Store the results in tab-seperated files, GFF analysis:
   list<-reference$informative.candidate.snps
   print(reference$goterms)
-  write.table(file="snp2go_pre_gtf.tsv",reference$enriched,sep="\t",row.names=F)
+  write.table(file="/Minotaur/snp2go_Variable.tsv",reference$enriched,sep="\t",row.names=F)
