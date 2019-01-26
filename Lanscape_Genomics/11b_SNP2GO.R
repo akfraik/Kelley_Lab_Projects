@@ -11,7 +11,7 @@
   library(SNP2GO)
   
 ##Read in the VCF files
-  snps<-read.delim("/project/devils_alexf/try3/data/info/Rapture/rap_pre.vcf",header=FALSE,comment.char="#")
+  snps<-read.delim("/Bed_Files/Annotated_Outliers_Bed_Variable.vcf",header=FALSE,comment.char="#")
   snps[,2]<-as.numeric(snps[,2])
   snps<-GRanges(seqnames=snps[,1],ranges=IRanges(snps[,2],snps[,2]))
 
