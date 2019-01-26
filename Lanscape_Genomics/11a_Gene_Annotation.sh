@@ -6,6 +6,8 @@
 INDIR="${PROJDIR}/Plink_Input"
 OUTDIR="${PROJDIR}/Bed_Files"
 
+module load vcftools
+
 if [[ $PBS_O_WORKDIR ]]; then
 
 ## Load plink
@@ -32,14 +34,18 @@ if [[ $PBS_O_WORKDIR ]]; then
  # bedtools window [OPTIONS] [-a|-abam] -b <BED/GFF/VCF>
   bedtools window -a "${OUTDIR}/outliers_${i}.bed" -b "${OUTDIR}/biomart_reduced.bed" > "${OUTDIR}/Annotated_Outliers_Bed_${i}"
 
-## SNP2GO
+## VCF tools to create pre-DFTD VCF files for SNP2GO from bedtools overlap tool
+   vcftools --vcf "${INDIR}/ped_all" --keep "${INDIR}/focal_${i}_individuals.keep" --recode --recode-INFO-all 
+    --snps "${OUTDIR}/Annotated_Outliers_Bed_${i}" --out "${OUTDIR}/Annotated_Outliers_Bed_${i}.vcf"
+
+## Make scripts for SNP2GO
    mkdir SNP2GO
    mkdir SNP2GO/${i}
    sed -e 's/Variable/${i}/g' "$SCRIPTDIR/11b_SNP2GO_${i}.R" > "$SCRIPTDIR/11b_SNP2GO_${i}.R"
 
 ## now give permission to run this script within this for loop
    chmod u+x "$SCRIPTDIR/11b_SNP2GO_${i}.R" 
-  "./$SCRIPTDIR/11b_SNP2GO_${i}.R"
+   "./$SCRIPTDIR/11b_SNP2GO_${i}.R"
 
 done
 
