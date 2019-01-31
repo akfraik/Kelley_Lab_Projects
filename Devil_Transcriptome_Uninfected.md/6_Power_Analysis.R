@@ -32,8 +32,9 @@ colnames(DGE_Object)<-Sample_Names
 
 ### Define the proportion of the provided data you want to subsample
 # Then define the methods you are interested in comparing, in this case we only used EdgeR
-proportions<-10^seq(-2,0,2)
-subsamples<-subsample(DGE_Object,proportions,method=c("edgeR"),treatment=DGE_Object$samples$group)
+# Make sure to specify the number of points in your interval you want to map (length.out=20, so 20)
+proportions<-10^seq(-2,0,length.out=20)
+subsamples<-subsample(DGE_Object,proportions,replicates=5,method=c("edgeR"),treatment=DGE_Object$samples$group)
 options(width=40)
 subsamples
 
