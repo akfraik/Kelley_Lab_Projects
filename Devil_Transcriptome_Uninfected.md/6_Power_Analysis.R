@@ -23,7 +23,7 @@ library(ggplot2)
 ### Read in the gene count matrix 
 # Define your grouping factors of interest (i.e: numeric coding for sex, 1 = female, 2 = male stored in object LIST)
 Devil_Data<-read.csv("gene_count_matrix.csv",row.names=1)
-groupings<-factor(c(LIST)
+groupings<-factor(c(1,2,1,2,1,1,2,1,2,1,1,2,2,1,2,1,2,2,2,1))
 DGE_Object<-DGEList(counts=Devil_Data,group=groupings)
 
 # Define your sample IDs, in this case we stored in object Sample)IDs
@@ -34,7 +34,7 @@ colnames(DGE_Object)<-Sample_Names
 # Then define the methods you are interested in comparing, in this case we only used EdgeR
 # Make sure to specify the number of points in your interval you want to map (length.out=20, so 20)
 proportions<-10^seq(-2,0,length.out=20)
-subsamples<-subsample(DGE_Object,proportions,replicates=5,method=c("edgeR"),treatment=DGE_Object$samples$group)
+subsamples<-subsample(DGE_Object,proportions,method=c("edgeR"),treatment=DGE_Object$samples$group)
 options(width=40)
 subsamples
 
