@@ -73,10 +73,10 @@ jpeg("QLDplot_design.jpg")
 plotQLDisp(fit)
 dev.off()
 
-#Test the output to find the top 10 DE genes between sex
+#Test the output to find the top 100 DE genes between sex
 #Positive LF changes means higher expression in M {coefficient SexM}
 test<-glmQLFTest(fit)
-design_output<-topTags(test,n=10)
+design_output<-topTags(test,n=100)
 summary(decideTests(test))
 write.csv(design_output,"design_output.csv")
 
