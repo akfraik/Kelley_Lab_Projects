@@ -9,7 +9,6 @@
 
 ## Or download your gene count matrix file onto your local computer and read it in as a csv file 
 # adjust the working directory in the read.csv line to include the path to your locally downloaded file
-
 ## Load the library containing the required packages for EdgeR
 library('edgeR')
 library('statmod')
@@ -18,7 +17,7 @@ library('limma')
 ## Read in the csv file containing your gene count matrix
 # Fill in $LIST with the "groupings" information or the factors your are comparing expression against
 x<-read.csv("gene_count_matrix.csv",row.names=1)
-groupings<-factor(c($LIST))
+groupings<-factor(c("FRY_F","FRY_M","WPP_F","WPP_M","FRY_F","WPP_F","WPP_M","ARV_F","ARV_M","FRY_F","WPP_F","ARV_M","FRY_M","WPP_F","WPP_M","ARV_F","ARV_M","FRY_M","WPP_M","ARV_F"))
 DGE_Object<-DGEList(counts=x,group=groupings)
 
 # Use this to check to make sure that your sample information is correct
@@ -32,12 +31,20 @@ DGE_Object<-DGE_Object[filtered_genes, , keep.lib.sizes=FALSE]
 # between the samples- kind of like an effective library size
 DGE_Object<-calcNormFactors(DGE_Object)
 
-### Color by your groupings factor and create labels with you sample information
 # Sample_Names <- Names of your samples (i.e: 1:20)
-# colors <- colors for grouping factors
+Sample_Names<-c("1-1","1-2","1-3","1-4","2-1","2-3","2-4","2-5","2-6","3-1","3-3","3-6","4-2","4-3","4-4","4-5","4-6","5-1","5-3","5-4")
+
+### Color by your groupings factor and create labels with you sample information
+colors<-c('blue','blue','hotpink','hotpink','limegreen','limegreen')
+
+## Make points by sex
 # pch <- "pch" or vector of values for the shape you want for a grouping factor
-# Population <- geographic location grouping factor designation
-# Sex <- sex grouping factor designation
+points<-c(1,2,1,2,1,2)
+
+##N ow set up the design matrix in which you are establishing all
+# of your variables of interest
+Population<-factor(c("FRY","FRY","WPP","WPP","FRY","WPP","WPP","ARV","ARV","FRY","WPP","ARV","FRY","WPP","WPP","ARV","ARV","FRY","WPP","ARV"))
+Sex<-factor(c("F","M","F","M","F","F","M","F","M","F","F","M","M","F","M","F","M","M","M","F"))
 DGE_Object<-data.frame(Sample=colnames(DGE_Object),Population,Sex)
 
 ### Create the model matrix where you are using population as the replicate and the 
