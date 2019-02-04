@@ -30,22 +30,22 @@ DGE_Object<-DGE_Object[filtered_genes, , keep.lib.sizes=FALSE]
 ### Normalize by library size for RNA composition by finding scaling factors for library sizes that minimize the log-fold changes 
 # between the samples- kind of like an effective library size
 DGE_Object<-calcNormFactors(DGE_Object)
+DGE_Object$samples
 
-# Sample_Names <- Names of your samples (i.e: 1:20)
+#Now, for the MDS plots Reprint all of the sample labels
 Sample_Names<-c("1-1","1-2","1-3","1-4","2-1","2-3","2-4","2-5","2-6","3-1","3-3","3-6","4-2","4-3","4-4","4-5","4-6","5-1","5-3","5-4")
 
-### Color by your groupings factor and create labels with you sample information
+#Color by population
 colors<-c('blue','blue','hotpink','hotpink','limegreen','limegreen')
 
-## Make points by sex
-# pch <- "pch" or vector of values for the shape you want for a grouping factor
+#Make points by sex
 points<-c(1,2,1,2,1,2)
 
-##N ow set up the design matrix in which you are establishing all
-# of your variables of interest
+#Now set up the design matrix in which you are establishing all
+#of your variables of interest
 Population<-factor(c("FRY","FRY","WPP","WPP","FRY","WPP","WPP","ARV","ARV","FRY","WPP","ARV","FRY","WPP","WPP","ARV","ARV","FRY","WPP","ARV"))
 Sex<-factor(c("F","M","F","M","F","F","M","F","M","F","F","M","M","F","M","F","M","M","M","F"))
-DGE_Object<-data.frame(Sample=colnames(DGE_Object),Population,Sex)
+data.frame(Sample=colnames(DGE_Object),Population,Sex)
 
 ### Create the model matrix where you are using population as the replicate and the 
 # sex as the variable we are interested in our additive linear model using "females" as our null or group of comparison
