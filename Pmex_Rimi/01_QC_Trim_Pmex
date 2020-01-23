@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --partition=kamiak
+#SBATCH --job-name=FastQC_Pmex
+#SBATCH --output=FastQC_Pmex_output.txt
+#SBATCH --error=FastQC_Pmex_error.txt
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=alexandra.fraik@wsu.edu
+
+PATH=$PATH:/data/kelley/projects/programs/FastQC_0.11.4
+
+INDIR=/data/kelley/projects/pmex/field2010
+OUTDIR=/data/kelley/projects/Pmex_Rimi/FastQC
+
+#Run FastQC
+for i in MX44 MX45 MX46 MX48 MX49 MX73 MX74 MX75 MX76 MX77;
+do
+
+echo "$i"
+
+#Run FastQC 
+/data/kelley/projects/programs/FastQC_0.11.4/fastqc --outdir $OUTDIR --noextract --nogroup $INDIR/${i}*.fastq.gz
+
+done
