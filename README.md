@@ -1,4 +1,4 @@
-# Alex_Fraik ReadME File for Kelley Lab projects
+# Alex Fraik's "ReadME" File for Kelley Lab projects
 
 ## Here are all of the directories with my code across all of my PhD projects in the Kelley Lab at Washington State University (2015-2021)
 In this directory I have placed all of the files
