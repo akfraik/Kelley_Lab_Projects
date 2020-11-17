@@ -1,7 +1,8 @@
 # Alex Fraik's "ReadME" File for Kelley Lab projects
 
 ## Here are all of the directories with my code across all of my PhD projects in the Kelley Lab at Washington State University (2015-2021)
-In this directory I have placed all of the files
+In this directory I have placed all of the files and scripts generated for published works
+Also can be found here https://github.com/KelleyCornejoLabs/Alex_Fraik
 
 ## Below are all of different projects I have worked on and the location of the code
 1. Landscape Genomics of Tasmanian Devil Populations
