@@ -21,5 +21,5 @@ In Review - code will be released upon acceptance for publication
 5. Riverscape genomics of Oncorhynchus mykiss on the Elwha River
 In Prep - code will be released upon acceptance for publication
 
-## Link to my google scholar page and citations for other projects below
+## Link to my google scholar page and citations for all other publications
 https://scholar.google.com/citations?user=W3XMQ68AAAAJ&hl=en
