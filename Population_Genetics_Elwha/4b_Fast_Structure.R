@@ -27,8 +27,7 @@ pop_code<-pop_code[c("sample.id","Location","site.x","Time","Species.1")]
 #### You can definitely loop through or use "apply" to just produce FastSTRUCTURE plots in ggplot in R
 # for all your iterations, but I am going to just show an example of how I made the pre-dam removal plot for K = 4
 
-#### 
-# Start with K = 4 which is the number of model components that FastSTRUCTURE's "ChooseK.py" script selected
+#### Start with K = 4 which is the number of model components that FastSTRUCTURE's "ChooseK.py" script selected
 samples<-read.csv("Pre_bed_nosex.csv",header=FALSE)
 colnames(samples)[1]<-"Nothing"
 colnames(samples)[2]<-"sample.id"
