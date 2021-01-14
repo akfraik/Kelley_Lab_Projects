@@ -1,6 +1,6 @@
 ###########################################################################################################################
-# 2. Filter and convert VCF File
-# 2a. Filter the STACKS output file, subset to useable VCF files for population genetics analyses and convert to plink
+## 2. Filter and convert VCF File
+# Filter the STACKS output file, subset to useable VCF files for population genetics analyses and convert to plink
 ###########################################################################################################################
 
 ####################################################################################################################################
