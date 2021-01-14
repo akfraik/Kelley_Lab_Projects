@@ -293,10 +293,6 @@ chrorder<-c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","1
 #### Load in a file with every SNP and every chromosome that it is on for annotation
 snp_position<-read.csv("~/Chromosome_Known_MAP.csv")
 
-#### Now we extract the information from the PCs to see what SNPs load most prevalently on each PC
-# Since our final data set had 71,320 SNPs, 1% of this is about 713, so we looked at the top 1% of SNPs
-# that loaded onto each PC to see what chromosome they were on and to see how large their loading was
-
 #### PC1
 # Take the top 100 SNPs that explain the highest proportion of variance per PC
 pca.c1<-pca.here$c1^2
