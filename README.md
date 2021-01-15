@@ -17,7 +17,7 @@ https://www.mdpi.com/2073-4425/10/10/801
 In Prep - code will be released upon acceptance for publication
 
 4. Population genetics of recolonizing steelhead (Oncorhynchus mykiss) on the Elwha River
-In Review - code will be released upon acceptance for publication
+Published - https://www.mdpi.com/2073-4425/12/1/89
 
 5. Riverscape genomics of Oncorhynchus mykiss on the Elwha River
 In Prep - code will be released upon acceptance for publication
